@@ -49,12 +49,27 @@ function App() {
     const errorSet = new Set(errorPositions.slice(0, numberOfErrors));
 
     let errorSequence = '';
+    let inErrorSpan = false;
+
     for (let i = 0; i < seq.length; i++) {
-      if (errorSet.has(i + 1)) {
-        errorSequence += `<span style="background-color: red; color: white;">${seq[i]}</span>`;
-      } else {
+        const isCurrentError = errorSet.has(i + 1);
+        if (isCurrentError && !inErrorSpan) {
+            // Start a new error span if we encounter an error and are not already in one
+            errorSequence += `<span style="background-color: red; color: white;">`;
+            inErrorSpan = true;
+        } else if (!isCurrentError && inErrorSpan) {
+            // Close the current error span if we encounter a non-error while in an error span
+            errorSequence += `</span>`;
+            inErrorSpan = false;
+        }
+
+        // Add the current character to the sequence
         errorSequence += seq[i];
-      }
+
+        // If it's the last character and we're still in an error span, close it
+        if (inErrorSpan && i === seq.length - 1) {
+            errorSequence += `</span>`;
+        }
     }
 
     return {__html: errorSequence};
