@@ -4,14 +4,9 @@ import seedrandom from 'seedrandom';
 
 function App() {
   const [qScore, setQScore] = useState(30);
+  const [sequenceLength, setSequenceLength] = useState(100000); // Default sequence length
   const [sequence, setSequence] = useState("");
   const [errorPositions, setErrorPositions] = useState([]);
-
-  useEffect(() => {
-    const newSequence = generateRandomSequence(10000);
-    setSequence(newSequence);
-    generateErrorPositions(newSequence.length);
-  }, []);
 
   function generateRandomSequence(length) {
     const bases = ['G', 'C', 'T', 'A'];
@@ -34,6 +29,16 @@ function App() {
     shuffleArray(positions);
     setErrorPositions(positions);
   }
+
+  function generateSequenceAndErrors(length) {
+    const newSequence = generateRandomSequence(length);
+    setSequence(newSequence);
+    generateErrorPositions(length);
+  }
+
+  useEffect(() => {
+    generateSequenceAndErrors(sequenceLength);
+  }, [sequenceLength]); // Regenerate sequence and errors when sequence length changes
 
   function calculateExpectedErrors(qScore, length) {
     // For example:
@@ -86,6 +91,15 @@ function App() {
         style={{ width: "100%" }}
       />
       <div>Q{qScore}</div>
+      <input
+        type="range"
+        min="1000"
+        max="200000"
+        value={sequenceLength}
+        onChange={(e) => setSequenceLength(parseInt(e.target.value, 10))}
+        style={{ width: "100%" }}
+      />
+      <div>Sequence Length: {sequenceLength}</div>
       <div style={{
            width: "100%",
            height: "90vh",
