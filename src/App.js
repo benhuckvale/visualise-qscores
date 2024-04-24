@@ -48,6 +48,9 @@ function App() {
     return Math.floor(length * probabilityOfError);
   }
 
+  function calculateErrorRate(qScore) {
+    return Math.pow(10, -qScore / 10) * 100;
+  }
 
   function renderSequenceWithErrors(seq, q) {
     const numberOfErrors = calculateExpectedErrors(q, seq.length);
@@ -90,7 +93,7 @@ function App() {
         onChange={(e) => setQScore(parseInt(e.target.value, 10))}
         style={{ width: "100%" }}
       />
-      <div>Q{qScore}</div>
+      <div>Q{qScore} - Error Rate: {calculateErrorRate(qScore).toFixed(2)}%</div>
       <input
         type="range"
         min="1000"
