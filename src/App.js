@@ -111,7 +111,8 @@ function App() {
            border: "1px solid #ccc",
            padding: "10px",
            boxSizing: "border-box",
-           fontFamily: "monospace"
+           fontFamily: "monospace",
+           fontSize: "6px"
         }}
            contentEditable="true" // Make it editable like textarea
            dangerouslySetInnerHTML={renderSequenceWithErrors(sequence, qScore)} />
