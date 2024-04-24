@@ -30,6 +30,9 @@ function App() {
   }
 
   function calculateExpectedErrors(qScore, length) {
+    // For example:
+    // If qScore is 10: 10^(-10/10) = 0.1
+    // If qScore is 20: 10^(-20/10) = 0.01
     const probabilityOfError = Math.pow(10, -qScore / 10);
     return Math.floor(length * probabilityOfError);
   }
