@@ -22,10 +22,16 @@ function App() {
     return sequence;
   }
 
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    }
+  }
+
   function generateErrorPositions(length) {
     let positions = Array.from({length: length}, (_, i) => i + 1);
-    let rng = seedrandom('constantSeed'); // Ensuring consistent shuffling
-    positions = positions.sort(() => 0.5 - rng());
+    shuffleArray(positions);
     setErrorPositions(positions);
   }
 
