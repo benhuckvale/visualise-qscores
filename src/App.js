@@ -46,7 +46,7 @@ function App() {
     let errorSequence = '';
     for (let i = 0; i < seq.length; i++) {
       if (errorSet.has(i + 1)) {
-        errorSequence += `<span style="color: red;">${seq[i]}</span>`;
+        errorSequence += `<span style="background-color: red; color: white;">${seq[i]}</span>`;
       } else {
         errorSequence += seq[i];
       }
