@@ -85,37 +85,37 @@ function App() {
 
   return (
     <div>
-      <input
-        type="range"
-        min="1"
-        max="60"
-        value={qScore}
-        onChange={(e) => setQScore(parseInt(e.target.value, 10))}
-        style={{ width: "100%" }}
-      />
-      <div>Q{qScore} - Error Rate: {calculateErrorRate(qScore).toFixed(2)}%</div>
-      <input
-        type="range"
-        min="1000"
-        max="200000"
-        value={sequenceLength}
-        onChange={(e) => setSequenceLength(parseInt(e.target.value, 10))}
-        style={{ width: "100%" }}
-      />
-      <div>Sequence Length: {sequenceLength}</div>
-      <div style={{
-           width: "100%",
-           height: "90vh",
-           overflow: "auto",
-           whiteSpace: "pre-wrap",
-           border: "1px solid #ccc",
-           padding: "10px",
-           boxSizing: "border-box",
-           fontFamily: "monospace",
-           fontSize: "6px"
-        }}
-           contentEditable="true" // Make it editable like textarea
-           dangerouslySetInnerHTML={renderSequenceWithErrors(sequence, qScore)} />
+      <div className="slider-box">
+        <div className="slider-container">
+          <input
+            type="range"
+            min="1"
+            max="60"
+            value={qScore}
+            onChange={(e) => setQScore(parseInt(e.target.value, 10))}
+            style={{ width: "100%" }}
+          />
+          <div className="slider-label">Q{qScore} - Error Rate: {calculateErrorRate(qScore).toFixed(4)}%</div>
+        </div>
+        <div className="slider-container">
+          <input
+            type="range"
+            min="1000"
+            max="200000"
+            value={sequenceLength}
+            onChange={(e) => setSequenceLength(parseInt(e.target.value, 10))}
+            style={{ width: "100%" }}
+          />
+          <div className="slider-label">Sequence Length: {sequenceLength}</div>
+        </div>
+      </div>
+      <div className="sequence-box">
+        <div className="sequence-container"
+             style={{ fontSize: "6px" }}
+             contentEditable="true" // Make it editable like textarea
+             dangerouslySetInnerHTML={renderSequenceWithErrors(sequence, qScore)}
+        />
+      </div>
     </div>
   );
 }
