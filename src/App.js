@@ -7,6 +7,7 @@ function App() {
   const [sequenceLength, setSequenceLength] = useState(100000); // Default sequence length
   const [sequence, setSequence] = useState("");
   const [errorPositions, setErrorPositions] = useState([]);
+  const [fontSize, setFontSize] = useState(8);
 
   function generateRandomSequence(length) {
     const bases = ['G', 'C', 'T', 'A'];
@@ -108,10 +109,24 @@ function App() {
           />
           <div className="slider-label">Sequence Length: {sequenceLength}</div>
         </div>
+        <div className="slider-container">
+          <input
+              type="range"
+              min="3"
+              max="16"
+              value={fontSize}
+              onChange={e => setFontSize(parseInt(e.target.value))}
+              style={{ width: "100%" }}
+          />
+          <div className="slider-label">Font Size: {fontSize}px</div>
+        </div>
       </div>
       <div className="sequence-box">
         <div className="sequence-container"
-             style={{ fontSize: "6px" }}
+             style={{
+                 fontSize: `${fontSize}px`,
+                 fontFamily: 'monospace'
+             }}
              contentEditable="true" // Make it editable like textarea
              dangerouslySetInnerHTML={renderSequenceWithErrors(sequence, qScore)}
         />
