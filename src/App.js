@@ -106,8 +106,8 @@ function App() {
         <div className="slider-container">
           <input
             type="range"
-            min="1000"
-            max="200000"
+            min="100"
+            max="1000000"
             value={sequenceLength}
             onChange={(e) => setSequenceLength(parseInt(e.target.value, 10))}
             style={{ width: "100%" }}
