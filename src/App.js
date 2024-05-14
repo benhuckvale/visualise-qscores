@@ -118,12 +118,13 @@ function App() {
           <input
               type="range"
               min="3"
-              max="16"
+              max="20"
+              step="0.5"
               value={fontSize}
-              onChange={e => setFontSize(parseInt(e.target.value))}
+              onChange={e => setFontSize(parseInt(e.target.value*2)/2.0)}
               style={{ width: "100%" }}
           />
-          <div className="slider-label">Font Size: {fontSize}px</div>
+          <div className="slider-label">Font Size: {fontSize.toFixed(1)}px</div>
         </div>
       </div>
       <div className="sequence-box">
