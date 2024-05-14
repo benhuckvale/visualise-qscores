@@ -69,7 +69,7 @@ function App() {
         const isCurrentError = errorSet.has(i + 1);
         if (isCurrentError && !inErrorSpan) {
             // Start a new error span if we encounter an error and are not already in one
-            errorSequence += `<span style="background-color: red; color: white;">`;
+            errorSequence += `<span class="highlight">`;
             inErrorSpan = true;
         } else if (!isCurrentError && inErrorSpan) {
             // Close the current error span if we encounter a non-error while in an error span

@@ -73,8 +73,13 @@
     overflow-y: visible;
     white-space: pre-wrap;
     border: 1px solid #ccc;
-    padding: 1px;
-    margin: 1px;
+    padding: 0px;
+    margin: 0px;
     box-sizing: border-box;
     font-family: 'Monospace';
+}
+
+span.highlight {
+  background-color: red;
+  color: white;
 }
