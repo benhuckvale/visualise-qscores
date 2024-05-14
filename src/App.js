@@ -3,16 +3,44 @@ import React, { useState, useEffect } from 'react';
 import seedrandom from 'seedrandom';
 
 function App() {
-  const [qScore, setQScore] = useState(30);
-  const [sequenceLength, setSequenceLength] = useState(100000); // Default sequence length
+  const getUrlParams = () => {
+      const params = new URLSearchParams(window.location.search);
+      return {
+          qScore: parseInt(params.get('qScore'), 10) || 30,
+          sequenceLength: parseInt(params.get('sequenceLength'), 10) || 100000,
+          fontSize: parseInt(parseFloat(params.get('fontSize'), 10)*2)/2.0 || 16
+      };
+  };
+
+  const [qScore, setQScore] = useState(getUrlParams().qScore);
+  const [sequenceLength, setSequenceLength] = useState(getUrlParams().sequenceLength);
+  const [fontSize, setFontSize] = useState(getUrlParams().fontSize);
   const [sequence, setSequence] = useState("");
   const [errorPositions, setErrorPositions] = useState([]);
-  const [fontSize, setFontSize] = useState(8);
 
   useEffect(() => {
     // Update page title in the browser tab and print header
     document.title = `${sequenceLength} bases`;
   }, [sequenceLength]);
+
+  const handleSliderChangeComplete = () => {
+    const newUrl = `?qScore=${qScore}&sequenceLength=${sequenceLength}&fontSize=${fontSize}`;
+    window.history.pushState({qScore, sequenceLength, fontSize}, '', newUrl);
+  };
+
+  useEffect(() => {
+    const onPopState = (event) => {
+      if (event.state) {
+        const params = getUrlParams();
+        setQScore(event.state.qScore ?? params.qScore);
+        setSequenceLength(event.state.sequenceLength ?? params.sequenceLength);
+        setFontSize(event.state.fontSize ?? params.fontSize);
+      }
+    };
+
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
 
   function generateRandomSequence(length) {
     const bases = ['G', 'C', 'T', 'A'];
@@ -99,6 +127,8 @@ function App() {
             max="60"
             value={qScore}
             onChange={(e) => setQScore(parseInt(e.target.value, 10))}
+            onMouseUp={handleSliderChangeComplete}
+            onTouchEnd={handleSliderChangeComplete}
             style={{ width: "100%" }}
           />
           <div className="slider-label">Q{qScore}; Error Rate: {calculateErrorRate(qScore).toFixed(4)}%</div>
@@ -110,6 +140,8 @@ function App() {
             max="1000000"
             value={sequenceLength}
             onChange={(e) => setSequenceLength(parseInt(e.target.value, 10))}
+            onMouseUp={handleSliderChangeComplete}
+            onTouchEnd={handleSliderChangeComplete}
             style={{ width: "100%" }}
           />
           <div className="slider-label">Sequence Length: {sequenceLength}</div>
@@ -122,6 +154,8 @@ function App() {
               step="0.5"
               value={fontSize}
               onChange={e => setFontSize(parseInt(e.target.value*2)/2.0)}
+              onMouseUp={handleSliderChangeComplete}
+              onTouchEnd={handleSliderChangeComplete}
               style={{ width: "100%" }}
           />
           <div className="slider-label">Font Size: {fontSize.toFixed(1)}px</div>
