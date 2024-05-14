@@ -9,6 +9,11 @@ function App() {
   const [errorPositions, setErrorPositions] = useState([]);
   const [fontSize, setFontSize] = useState(8);
 
+  useEffect(() => {
+    // Update page title in the browser tab and print header
+    document.title = `${sequenceLength} bases`;
+  }, [sequenceLength]);
+
   function generateRandomSequence(length) {
     const bases = ['G', 'C', 'T', 'A'];
     let sequence = '';
