@@ -101,7 +101,7 @@ function App() {
             onChange={(e) => setQScore(parseInt(e.target.value, 10))}
             style={{ width: "100%" }}
           />
-          <div className="slider-label">Q{qScore} - Error Rate: {calculateErrorRate(qScore).toFixed(4)}%</div>
+          <div className="slider-label">Q{qScore}; Error Rate: {calculateErrorRate(qScore).toFixed(4)}%</div>
         </div>
         <div className="slider-container">
           <input
