@@ -1,6 +1,5 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import seedrandom from 'seedrandom';
 
 const setFavicon = (qScore) => {
   const svg = `
