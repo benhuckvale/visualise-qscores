@@ -26,6 +26,34 @@ const setFavicon = (qScore) => {
   document.head.appendChild(link);
 };
 
+function generateRandomSequence(length) {
+  const bases = ['G', 'C', 'T', 'A'];
+  let sequence = '';
+  for (let i = 0; i < length; i++) {
+    sequence += bases[Math.floor(Math.random() * 4)];
+  }
+  return sequence;
+}
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+  }
+}
+
+function calculateExpectedErrors(qScore, length) {
+  // For example:
+  // If qScore is 10: 10^(-10/10) = 0.1
+  // If qScore is 20: 10^(-20/10) = 0.01
+  const probabilityOfError = Math.pow(10, -qScore / 10);
+  return Math.floor(length * probabilityOfError);
+}
+
+function calculateErrorRate(qScore) {
+  return Math.pow(10, -qScore / 10) * 100;
+}
+
 function App() {
   const getUrlParams = () => {
       const params = new URLSearchParams(window.location.search);
@@ -41,15 +69,6 @@ function App() {
   const [fontSize, setFontSize] = useState(getUrlParams().fontSize);
   const [sequence, setSequence] = useState("");
   const [errorPositions, setErrorPositions] = useState([]);
-
-  useEffect(() => {
-    // Update page title in the browser tab and print header
-    document.title = `${sequenceLength} bases`;
-  }, [sequenceLength]);
-
-  useEffect(() => {
-    setFavicon(qScore);
-  }, [qScore]);
 
   const handleSliderChangeComplete = () => {
     const newUrl = `?qScore=${qScore}&sequenceLength=${sequenceLength}&fontSize=${fontSize}`;
@@ -70,48 +89,10 @@ function App() {
     return () => window.removeEventListener('popstate', onPopState);
   }, []);
 
-  function generateRandomSequence(length) {
-    const bases = ['G', 'C', 'T', 'A'];
-    let sequence = '';
-    for (let i = 0; i < length; i++) {
-      sequence += bases[Math.floor(Math.random() * 4)];
-    }
-    return sequence;
-  }
-
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
-    }
-  }
-
   function generateErrorPositions(length) {
     let positions = Array.from({length: length}, (_, i) => i + 1);
     shuffleArray(positions);
     setErrorPositions(positions);
-  }
-
-  function generateSequenceAndErrors(length) {
-    const newSequence = generateRandomSequence(length);
-    setSequence(newSequence);
-    generateErrorPositions(length);
-  }
-
-  useEffect(() => {
-    generateSequenceAndErrors(sequenceLength);
-  }, [sequenceLength]); // Regenerate sequence and errors when sequence length changes
-
-  function calculateExpectedErrors(qScore, length) {
-    // For example:
-    // If qScore is 10: 10^(-10/10) = 0.1
-    // If qScore is 20: 10^(-20/10) = 0.01
-    const probabilityOfError = Math.pow(10, -qScore / 10);
-    return Math.floor(length * probabilityOfError);
-  }
-
-  function calculateErrorRate(qScore) {
-    return Math.pow(10, -qScore / 10) * 100;
   }
 
   function renderSequenceWithErrors(seq, q) {
@@ -144,6 +125,19 @@ function App() {
 
     return {__html: errorSequence};
   }
+
+  useEffect(() => {
+    // Regenerate sequence and errors when sequence length changes
+    const newSequence = generateRandomSequence(sequenceLength);
+    setSequence(newSequence);
+    generateErrorPositions(sequenceLength);
+    // Update page title in the browser tab and print header
+    document.title = `${sequenceLength} bases`;
+  }, [sequenceLength]);
+
+  useEffect(() => {
+    setFavicon(qScore);
+  }, [qScore]);
 
   return (
     <div>
