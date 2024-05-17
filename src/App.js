@@ -2,6 +2,31 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import seedrandom from 'seedrandom';
 
+const setFavicon = (qScore) => {
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <rect width="100%" height="100%" fill="#fff"/>
+      <text x="50%" y="50%" font-family="Arial" font-size="50"
+            fill="black" dominant-baseline="middle" text-anchor="middle">
+        Q${qScore}
+      </text>
+    </svg>
+  `;
+
+  const url = `data:image/svg+xml;base64,${btoa(svg)}`;
+  const link = document.createElement('link');
+  const oldLink = document.getElementById('dynamic-favicon');
+  link.id = 'dynamic-favicon';
+  link.rel = 'icon';
+  link.href = url;
+
+  if (oldLink) {
+    document.head.removeChild(oldLink);
+  }
+
+  document.head.appendChild(link);
+};
+
 function App() {
   const getUrlParams = () => {
       const params = new URLSearchParams(window.location.search);
@@ -22,6 +47,10 @@ function App() {
     // Update page title in the browser tab and print header
     document.title = `${sequenceLength} bases`;
   }, [sequenceLength]);
+
+  useEffect(() => {
+    setFavicon(qScore);
+  }, [qScore]);
 
   const handleSliderChangeComplete = () => {
     const newUrl = `?qScore=${qScore}&sequenceLength=${sequenceLength}&fontSize=${fontSize}`;
