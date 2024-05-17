@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build && mv dist dist_temp && mkdir dist && mv dist_temp dist/subdir",
     "preview": "astro preview",
     "astro": "astro"
   },
