@@ -1,5 +1,0 @@
-# netlify.toml
-[[redirects]]
-  from = "/qscore/*"
-  to = "/qscore/index.html"
-  status = 200
