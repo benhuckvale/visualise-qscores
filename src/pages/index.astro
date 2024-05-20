@@ -1,13 +1,32 @@
 ---
-// Import React components like this
 import React from 'react';
 import App from '../App.jsx';
 import Info from '../Info.jsx';
----
 
-<html>
-<body>
-  <Info client:only/>
-  <App client:only/>
-</body>
+const getFullUrl = (path) => {
+  const baseUrl = import.meta.env.URL || 'http://localhost:3000';
+  return new URL(path, baseUrl).toString();
+};
+
+const siteTitle = 'Qscore Visualisation';
+const siteDescription = 'React app to help get a feel for and visualise error rates in genomic data given by Q-scores.';
+const siteUrl = getFullUrl('/');
+const imageUrl = getFullUrl('/thumbnail.jpg');
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{siteTitle}</title>
+    <meta property="og:title" content={siteTitle} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={siteUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:description" content={siteDescription} />
+  </head>
+  <body>
+    <Info client:only/>
+    <App client:only/>
+  </body>
 </html>
