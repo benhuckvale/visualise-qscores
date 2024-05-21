@@ -20,9 +20,9 @@ const Info = () => {
             what a Q score accuracy for genomic data means. The sequence
             generated below is entirely random, and all that is happening is that
             some of the bases are being highlighted as supposed errors according
-            to the error rate implied by the selected Q score. Errors in real
-            sequencing would form a considerably more complex picture.
-          </p>
+            to the error rate implied by the selected Q score.  There are more
+            complex biological and technical factors that influence error rates
+            in real sequencing scenarios.
         </div>
       )}
     </div>
