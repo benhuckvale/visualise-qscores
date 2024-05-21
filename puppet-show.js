@@ -22,7 +22,7 @@ const publicDir = path.resolve(__dirname, 'public');
 if (!fs.existsSync(publicDir)) {
   fs.mkdirSync(publicDir, { recursive: true });
 }
-const outputPath = path.resolve(publicDir, 'thumbnail.png');
+const outputPath = path.resolve(publicDir, 'thumbnail.jpg');
 
 const startServer = () => {
   console.log('Starting server...');
