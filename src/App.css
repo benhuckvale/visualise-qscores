@@ -68,8 +68,6 @@
 
 .sequence-container {
     width: 100%;
-    #height: 90vh;
-    #overflow: auto;
     overflow-y: visible;
     white-space: pre-wrap;
     border: 1px solid #ccc;
