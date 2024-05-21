@@ -56,11 +56,14 @@ function calculateErrorRate(qScore) {
 
 function App() {
   const getUrlParams = () => {
-      const params = new URLSearchParams(window.location.search);
+      const rawParams = new URLSearchParams(window.location.search);
+      const params = new URLSearchParams(
+        Array.from(rawParams, ([key, value]) => [key.toLowerCase(), value])
+      );
       return {
-          qScore: parseInt(params.get('qScore'), 10) || 30,
-          sequenceLength: parseInt(params.get('sequenceLength'), 10) || 100000,
-          fontSize: parseInt(parseFloat(params.get('fontSize'), 10)*2)/2.0 || 16
+        qScore: parseInt(params.get('qscore'), 10) || 30,
+        sequenceLength: parseInt(params.get('sequencelength'), 10) || 100000,
+        fontSize: parseInt(parseFloat(params.get('fontsize'), 10)*2)/2.0 || 16
       };
   };
 
