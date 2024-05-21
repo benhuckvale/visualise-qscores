@@ -31,7 +31,10 @@ const startServer = () => {
 
 const stopServer = (serverProcess) => {
   console.log('Stopping server...');
-  serverProcess.kill('SIGINT');
+  if (serverProcess) {
+    serverProcess.kill();
+    console.log('Server stopped.');
+  }
 };
 
 const generateThumbnail = async () => {
@@ -61,6 +64,7 @@ const main = async () => {
       console.error('Error generating thumbnail:', error);
     } finally {
       stopServer(serverProcess);
+      process.exit(0);
     }
   });
 };
