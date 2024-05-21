@@ -23,6 +23,7 @@ const Info = () => {
             to the error rate implied by the selected Q score.  There are more
             complex biological and technical factors that influence error rates
             in real sequencing scenarios.
+          </p>
         </div>
       )}
     </div>
