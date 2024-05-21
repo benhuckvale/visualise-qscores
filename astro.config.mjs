@@ -7,4 +7,7 @@ export default defineConfig({
   site: import.meta.env.URL || 'http://localhost:3000',
   base: '/qscore/',
   integrations: [react()],
+  devToolbar: {
+    enabled: false
+  }
 });

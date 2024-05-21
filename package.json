@@ -5,14 +5,19 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && mv dist dist_temp && mkdir dist && mv dist_temp dist/qscore",
     "preview": "astro preview",
-    "astro": "astro"
+    "generate-thumbnail": "node puppet-show.js",
+    "astro": "astro",
+    "build": "npm run generate-thumbnail && astro build && mv dist dist_temp && mkdir dist && mv dist_temp dist/qscore"
   },
   "dependencies": {
     "@astrojs/react": "^3.3.4",
     "astro": "^4.8.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "puppeteer": "^22.9.0",
+    "wait-on": "^7.2.0"
   }
 }
