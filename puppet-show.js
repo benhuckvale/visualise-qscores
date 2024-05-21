@@ -8,6 +8,7 @@ import path, { dirname } from 'path';
 import puppeteer from 'puppeteer';
 import { fileURLToPath } from 'url';
 import waitOn from 'wait-on';
+import chromium from 'chromium';
 
 // Get the current directory
 const __filename = fileURLToPath(import.meta.url);
@@ -38,7 +39,7 @@ const stopServer = (serverProcess) => {
 };
 
 const generateThumbnail = async () => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({ executablePath: chromium.path });
   const page = await browser.newPage();
   await page.setViewport({ width: 1200, height: 630 });
   console.log(`Browsing to ${fullUrl}`);
